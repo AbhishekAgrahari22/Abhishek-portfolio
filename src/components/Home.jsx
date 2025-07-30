@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Skills from '../pages/Skills';
+import laptopImage from '../assets/3d-rendering-laptop.jpg';
 
 const Home = () => {
   return (
@@ -176,7 +177,7 @@ const Home = () => {
         >
           <div className="hero-image">
             <img
-              src="src/assets/3d-rendering-laptop.jpg"
+              src={laptopImage}
               alt="3D Engineering Illustration"
               style={{
                 width: '100%',

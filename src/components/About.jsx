@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import abhishekImage from '../assets/Abhishek_img.jpg';
 
 const About = () => {
   return (
@@ -86,7 +87,7 @@ const About = () => {
             transition={{ duration: 0.7 }}
           >
             <img
-              src="src/assets/Abhishek_img.jpg"
+              src={abhishekImage}
               alt="3D Engineering Illustration"
               style={{
                 width: '100%',

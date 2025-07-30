@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import './styles/Navbar.css';
+import logoImage from '../assets/abhi_logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="brand-logo d-flex align-items-center" style={{ minWidth: '150px' }}>
           <img
-            src="src/assets/abhi_logo.png"
+            src={logoImage}
             alt="Logo"
             className="logo-img"
             style={{ height: '40px' }}

@@ -1,0 +1,10 @@
+.placeholder-purple::placeholder {
+    color: #000 !important;
+    opacity: 1;
+}
+
+.placeholder-purple::placeholder {
+    color: #a58df7;
+    /* bright but soft purple */
+    opacity: 1;
+}

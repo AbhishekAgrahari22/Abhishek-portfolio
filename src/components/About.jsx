@@ -6,15 +6,7 @@ const About = () => {
   return (
     <div id="about" style={{ scrollMarginTop: '100px' }}>
       <section
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'linear-gradient(135deg, #1c1b1d 0%, #2e2c30 100%)',
-          padding: '3rem 1.5rem',
-          color: '#f0f0f0',
-        }}
+        style={{ backgroundColor: '#000', color: '#fff', padding: '4rem 1rem', minHeight: '100vh' }}
       >
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -32,29 +24,31 @@ const About = () => {
 
           .about-image {
             flex: 1;
-            min-width: 320px;
+            min-width: 300px;
             max-width: 420px;
             border-radius: 1.5rem;
             overflow: hidden;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.4s ease, filter 0.4s ease;
             cursor: pointer;
           }
 
           .about-image:hover {
-            transform: scale(1.03);
+            transform: scale(1.04);
             filter: brightness(1.1);
           }
 
           .about-text {
             flex: 1;
             min-width: 300px;
+            padding: 0 0.5rem;
           }
 
           .about-text h2 {
             font-size: 2.8rem;
             margin-bottom: 1.2rem;
-            color: #ffffff;
             background: linear-gradient(90deg, #ffffff, #5ac8fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -63,7 +57,9 @@ const About = () => {
           .about-text p {
             font-size: 1.1rem;
             line-height: 1.9;
-            color: #d5d5d5;
+            color: #cccccc;
+            text-align: justify;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.05);
           }
 
           @media (max-width: 768px) {
@@ -75,46 +71,52 @@ const About = () => {
             .about-text h2 {
               font-size: 2rem;
             }
+
+            .about-text p {
+              text-align: center;
+            }
           }
         `}</style>
 
         <div className="about-container">
-          {/* Local 3D Illustration */}
+          {/* Profile Image with Motion */}
           <motion.div
             className="about-image"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <img
               src={abhishekImage}
-              alt="3D Engineering Illustration"
+              alt="Abhishek Agrahari"
               style={{
                 width: '100%',
                 height: 'auto',
                 maxHeight: '500px',
                 display: 'block',
-                bjectFit: 'fill',
+                objectFit: 'cover',
               }}
             />
-
           </motion.div>
 
-          {/* Animated Text Content */}
+          {/* About Text with Animation */}
           <motion.div
             className="about-text"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           >
             <h2>About Me</h2>
             <p>
-              I'm Abhishek Agrahari — a creative, detail‑oriented front‑end developer with 1.5 years of experience delivering performance‑optimized, modern web and mobile applications.
+              I'm <strong>Abhishek Agrahari</strong> — a creative, detail-oriented front-end developer with <strong>1.5 years of experience</strong> building performance-optimized, modern web and mobile applications.
               <br /><br />
-              I specialize in React and modern JavaScript frameworks, blending engineering rigor with elegant UI. Passionate about UI/UX and animation, I love turning technical challenges into seamless, human‑focused experiences.
+              I specialize in <strong>React</strong>, <strong>JavaScript</strong>, and component-driven architecture, combining engineering rigor with refined UI/UX. I thrive on delivering seamless, user-focused experiences enhanced by animation and visual storytelling.
+              <br /><br />
+              Let’s build intuitive, scalable, and beautiful digital solutions together.
             </p>
           </motion.div>
         </div>
+        
       </section>
     </div>
   );

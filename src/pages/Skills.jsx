@@ -60,7 +60,7 @@ const Skills = () => {
           >
             {current.label}
           </span>
-          <span style={{ color: '#555', fontWeight: 400 }}>{current.name}</span>
+          <span style={{ color: '#999', fontWeight: 400 }}>{current.name}</span>
         </motion.div>
       </AnimatePresence>
     </section>

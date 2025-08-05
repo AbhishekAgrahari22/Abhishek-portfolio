@@ -20,7 +20,7 @@ const SocialWaveBar = () => {
             rel="noopener noreferrer"
             style={{ color: '#0ea5e9' }}
           >
-            <FontAwesomeIcon icon={faLinkedin} size="2x" />
+            <FontAwesomeIcon icon={faLinkedin} size="1x" />
           </a>
           <a
             href="https://github.com/AbhishekAgrahari22"
@@ -28,7 +28,7 @@ const SocialWaveBar = () => {
             rel="noopener noreferrer"
             style={{ color: '#ffffff' }}
           >
-            <FontAwesomeIcon icon={faGithub} size="2x" />
+            <FontAwesomeIcon icon={faGithub} size="1x" />
           </a>
           <a
             href="https://x.com/AgAbhishek_22"
@@ -36,13 +36,13 @@ const SocialWaveBar = () => {
             rel="noopener noreferrer"
             style={{ color: '#1DA1F2' }}
           >
-            <FontAwesomeIcon icon={faTwitter} size="2x" />
+            <FontAwesomeIcon icon={faTwitter} size="1x" />
           </a>
           <a
             href="mailto:abhishek9670177034@gmail.com"
             style={{ color: '#FF4B4B' }}
           >
-            <FontAwesomeIcon icon={faEnvelope} size="2x" />
+            <FontAwesomeIcon icon={faEnvelope} size="1x" />
           </a>
         </div>
       </section>

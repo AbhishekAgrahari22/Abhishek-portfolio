@@ -11,7 +11,7 @@ import SplashScreen from './components/SplashScreen';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import DividerSection from './components/DividerSection';
+// import DividerSection from './components/DividerSection';
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -52,7 +52,7 @@ const App = () => {
                     <Home />
                     <About />
                     <TechStack />
-                    <DividerSection />
+{/*                     <DividerSection /> */}
                     <Projects />
                     <ContactForm />
                     <SocialWaveBar />

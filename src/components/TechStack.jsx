@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaHtml5, FaCss3Alt, FaJs, FaBootstrap, FaReact, FaNodeJs,
   FaFigma, FaDocker, FaGithub,
@@ -21,7 +21,35 @@ const techs = [
   { name: 'Flutter', icon: <SiFlutter color="#02569B" /> },
 ];
 
+const TechCard = ({ name, icon, onHover, onLeave }) => {
+  const ref = useRef(null);
+
+  const handleMouseEnter = () => {
+    const rect = ref.current.getBoundingClientRect();
+    onHover({
+      x: rect.left + window.scrollX,
+      y: rect.top + window.scrollY,
+      width: rect.width,
+      height: rect.height,
+    });
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="tech-card"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={onLeave}
+    >
+      <div className="tech-icon">{icon}</div>
+      <div className="tech-name">{name}</div>
+    </div>
+  );
+};
+
 const TechStack = () => {
+  const [hoverData, setHoverData] = useState(null);
+
   return (
     <section
       id="techstack"
@@ -48,57 +76,39 @@ const TechStack = () => {
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
           gap: 2rem;
           justify-items: center;
+          position: relative;
         }
 
         .tech-card {
+          position: relative;
+          width: 260px;
+          height: 180px;
+          padding: 2rem;
           background: rgba(255, 255, 255, 0.05);
           backdrop-filter: blur(14px);
           border: 1px solid rgba(255, 255, 255, 0.08);
-          padding: 2rem;
           border-radius: 1.5rem;
           text-align: center;
-          position: relative;
-          cursor: pointer;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          width: 260px;
-          height: 180px;
           display: flex;
           flex-direction: column;
           justify-content: center;
+          transition: transform 0.3s ease;
+          cursor: pointer;
           overflow: hidden;
-        }
-
-        .tech-card::before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          background: linear-gradient(135deg, #33ccff, #a855f7);
-          border-radius: inherit;
-          z-index: -1;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-          filter: blur(12px);
-        }
-
-        .tech-card:hover::before {
-          opacity: 0.25;
+          z-index: 10;
         }
 
         .tech-card:hover {
-          transform: scale(1.05);
-        }
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(177, 66, 245, 0.8), 0 0 40px rgba(177, 66, 245, 0.5);
+  z-index: 11;
+}
 
-        .tech-card:hover .tech-icon {
-          transform: scale(1.1);
-        }
 
         .tech-icon {
           font-size: 3rem;
+          z-index: 1;
           animation: float 3s ease-in-out infinite;
-          transition: transform 0.3s ease;
         }
 
         .tech-name {
@@ -106,6 +116,7 @@ const TechStack = () => {
           font-weight: 700;
           font-size: 1.1rem;
           color: #ccc;
+          z-index: 1;
         }
 
         @keyframes float {
@@ -159,25 +170,42 @@ const TechStack = () => {
         </p>
       </motion.div>
 
-      {/* Tech Grid */}
+      {/* Tech Grid with glow */}
       <div className="tech-wrapper">
         <div className="tech-grid">
+          {/* Shared glowing hover effect */}
+          <AnimatePresence>
+            {hoverData && (
+              <motion.div
+                className="absolute rounded-3xl pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  top: hoverData.y - 16,
+                  left: hoverData.x - 16,
+                  width: hoverData.width + 32,
+                  height: hoverData.height + 32,
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(168,85,247,0.3), transparent 70%)',
+                  filter: 'blur(40px)',
+                  position: 'absolute',
+                  zIndex: 0,
+                }}
+              />
+            )}
+          </AnimatePresence>
+
           {techs.map((tech, index) => (
-            <motion.div
+            <TechCard
               key={tech.name}
-              className="tech-card"
-              initial={{ opacity: 0, scale: 0.8, y: 30 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.08,
-                ease: 'easeOut',
-              }}
-            >
-              <div className="tech-icon">{tech.icon}</div>
-              <div className="tech-name">{tech.name}</div>
-            </motion.div>
+              name={tech.name}
+              icon={tech.icon}
+              onHover={(data) => setHoverData(data)}
+              onLeave={() => setHoverData(null)}
+            />
           ))}
         </div>
       </div>
@@ -187,148 +215,3 @@ const TechStack = () => {
 
 export default TechStack;
 
-
-
-// import React from 'react';
-// import { motion } from 'framer-motion';
-
-// import {
-//   FaHtml5,
-//   FaCss3Alt,
-//   FaJs,
-//   FaBootstrap,
-//   FaReact,
-//   FaNodeJs,
-//   FaFigma,
-//   FaDocker,
-//   FaGithub,
-// } from 'react-icons/fa';
-// import { SiTailwindcss, SiRedux } from 'react-icons/si';
-
-// const techs = [
-//   { name: 'HTML', icon: <FaHtml5 color="#e34c26" /> },
-//   { name: 'CSS', icon: <FaCss3Alt color="#264de4" /> },
-//   { name: 'JavaScript', icon: <FaJs color="#f0db4f" /> },
-//   { name: 'Bootstrap', icon: <FaBootstrap color="#7952b3" /> },
-//   { name: 'React', icon: <FaReact color="#61dafb" /> },
-//   { name: 'Redux', icon: <SiRedux color="#764abc" /> },
-//   { name: 'Tailwind', icon: <SiTailwindcss color="#38bdf8" /> },
-//   { name: 'Node.js', icon: <FaNodeJs color="#3c873a" /> },
-//   { name: 'Figma', icon: <FaFigma color="#f24e1e" /> },
-//   { name: 'Docker', icon: <FaDocker color="#0db7ed" /> },
-//   { name: 'GitHub', icon: <FaGithub color="#fff" /> },
-// ];
-
-// const TechStack = () => {
-//   return (
-// <section
-//   id="techstack"
-//   style={{ backgroundColor: '#000', color: '#fff', padding: '4rem 1rem', minHeight: '100vh' }}
-// >
-//   <style>{`
-//     .tech-wrapper {
-//       max-width: 1200px;
-//       margin: 0 auto;
-//       padding: 0 1rem;
-      
-//     }
-
-//     .tech-grid {
-//       display: grid;
-//       gap: 2rem;
-//       grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
-//       justify-content: center;
-//     }
-
-//     .tech-card {
-//       background: #111;
-//       border: 1px solid #333;
-//       padding: 2rem;
-//       border-radius: 1.5rem;
-//       text-align: center;
-//       transition: all 0.3s ease;
-//       min-width: 220px;
-//     }
-
-//     .tech-card:hover {
-//       background-color: #1a1a1a;
-//       border-color: #555;
-//       box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-//       transform: scaleY(1.05); /* Slight height increase */
-//     }
-
-//     .tech-icon {
-//       font-size: 2.8rem;
-//       transition: transform 0.3s ease, filter 0.3s ease;
-//     }
-
-//     .tech-icon:hover {
-//       transform: scale(1.2);
-      
-//       filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
-//     }
-
-//     .tech-name {
-//       margin-top: 0.8rem;
-//       font-weight: 700;
-//       font-size: 1.1rem;
-//     }
-
-//     @media (max-width: 768px) {
-//       .tech-grid {
-//         grid-template-columns: repeat(2, 1fr);
-//       }
-//     }
-
-//     @media (max-width: 480px) {
-//       .tech-grid {
-//         grid-template-columns: 1fr;
-//       }
-//     }
-//   `}</style>
-//   <motion.div
-//   initial={{ opacity: 0, scaleX: 0 }}
-//   whileInView={{ opacity: 1, scaleX: 1 }}
-//   transition={{ duration: 0.6, ease: 'easeOut' }}
-//   style={{
-//     height: '4px',
-//     width: '100%',
-//     background: 'linear-gradient(to right, #0d6dfc, #33ccff)',
-//     margin: '64px 0',
-//     transformOrigin: 'left center',
-//     borderRadius: '2px',
-//     boxShadow: '0 0 16px rgba(13, 109, 252, 0.4)',
-//   }}
-// />
-
-//   <div className="text-center mb-5">
-//     <h2>🌟 My Tech Stack</h2>
-//     <p className="text-secondary">
-//       Tools and technologies I use to build seamless digital experiences.
-//     </p>
-//   </div>
-
-//   {/* ➤ Wrapping container with padding and center */}
-//   <div className="tech-wrapper">
-//     <div className="tech-grid">
-//       {techs.map((tech, index) => (
-//         <motion.div
-//           key={tech.name}
-//           className="tech-card"
-//           initial={{ opacity: 0, scale: 0.6 }}
-//           whileInView={{ opacity: 1, scale: 1 }}
-//           viewport={{ once: true }}
-//           transition={{ duration: 0.4, delay: index * 0.1 }}
-//         >
-//           <div className="tech-icon">{tech.icon}</div>
-//           <div className="tech-name">{tech.name}</div>
-//         </motion.div>
-//       ))}
-//     </div>
-//   </div>
-// </section>
-
-//   );
-// };
-
-// export default TechStack;
